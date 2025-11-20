@@ -71,11 +71,11 @@ class YAMNetLayer(tf.keras.layers.Layer):
 ### Training Strategy: Imbalance Handling & 2-Phase Optimization
 Data within the specialized domain of household appliance noise is inherently sparse, presenting significant challenges in constructing large-scale datasets. To overcome the limitations associated with small-scale datasets (i.e., data scarcity and class imbalance) and to enhance the model's generalization capabilities, we designed the following tailored training algorithms.
 
-+ A. Class-Aware Augmentation & Weighting
+#### A. Class-Aware Augmentation & Weighting
 
 Instead of applying uniform random augmentation, we implemented a conditional augmentation logic that adjusts intensity based on specific class characteristics.
-  + Target Classes (Appliances): We applied strong augmentation techniques, such as Pitch Shifting and Noise Injection, to artificially synthesize diversity and mitigate the risk of overfitting due to limited data.
-  + Rejection Class (Others): Since this class represents the background environment, we employed conservative augmentation to preserve the original acoustic features.
++ Target Classes (Appliances): We applied strong augmentation techniques, such as Pitch Shifting and Noise Injection, to artificially synthesize diversity and mitigate the risk of overfitting due to limited data.
++ Rejection Class (Others): Since this class represents the background environment, we employed conservative augmentation to preserve the original acoustic features.
 
 Simultaneously, we computed class weights inversely proportional to the number of samples (Inverse Frequency Weighting) and applied them to the Cross-Entropy Loss function. This mathematically compensates for the imbalance by ensuring that the model prioritizes learning from underrepresented minority classes.
 
@@ -155,10 +155,10 @@ class_weights = class_weight.compute_class_weight(
 class_weight_dict = {i : class_weights[i] for i in range(len(class_weights))}
 ```
 
-+ B. 2-Phase Fine-Tuning Protocol
+#### B. 2-Phase Fine-Tuning Protocol
 To mitigate the risk of 'Catastrophic Forgetting' inherent in transfer learning, we implemented a rigorous two-phase optimization protocol.
-  + Phase 1 (Warm-up): The backbone network is frozen, and only the custom classifier head is trained using a relatively high learning rate ($10^{-3}$). This step stabilizes the initial weights of the dense layers before modifying the feature extractor.
-  + Phase 2 (Fine-tuning): The backbone is unfrozen to allow end-to-end adaptation. However, we critically ensure that Batch Normalization (BN) layers remain frozen while applying a very low learning rate ($10^{-5}$). This technique is pivotal for adapting the model to the specific appliance domain while preserving the robust statistical feature distributions learned from the large-scale source dataset (AudioSet).
++ Phase 1 (Warm-up): The backbone network is frozen, and only the custom classifier head is trained using a relatively high learning rate ($10^{-3}$). This step stabilizes the initial weights of the dense layers before modifying the feature extractor.
++ Phase 2 (Fine-tuning): The backbone is unfrozen to allow end-to-end adaptation. However, we critically ensure that Batch Normalization (BN) layers remain frozen while applying a very low learning rate ($10^{-5}$). This technique is pivotal for adapting the model to the specific appliance domain while preserving the robust statistical feature distributions learned from the large-scale source dataset (AudioSet).
  
 ```python
 #2-Phase Fine-Tuning
