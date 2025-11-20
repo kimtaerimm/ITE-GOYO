@@ -1,4 +1,4 @@
-<img width="468" height="382" alt="image" src="https://github.com/user-attachments/assets/ece859c9-0fc9-49cb-aa97-cf08fbf0c60c" />## ITE-GOYO
+## ITE-GOYO
 ---
 # Members
 ---
