@@ -70,7 +70,8 @@ class YAMNetLayer(tf.keras.layers.Layer):
 
 ### Training Strategy: Imbalance Handling & 2-Phase Optimization
 Data within the specialized domain of household appliance noise is inherently sparse, presenting significant challenges in constructing large-scale datasets. To overcome the limitations associated with small-scale datasets (i.e., data scarcity and class imbalance) and to enhance the model's generalization capabilities, we designed the following tailored training algorithms.
-+** A. Class-Aware Augmentation & Weighting**
+
++ ** A. Class-Aware Augmentation & Weighting**
 
 Instead of applying uniform random augmentation, we implemented a conditional augmentation logic that adjusts intensity based on specific class characteristics.
   + Target Classes (Appliances): We applied strong augmentation techniques, such as Pitch Shifting and Noise Injection, to artificially synthesize diversity and mitigate the risk of overfitting due to limited data.
