@@ -67,3 +67,87 @@ class YAMNetLayer(tf.keras.layers.Layer):
     def compute_output_shape(self, input_shape):
         return (input_shape[0], 1, 1024)
 ```
+
+### Training Strategy: Imbalance Handling & 2-Phase Optimization
+Data within the specialized domain of household appliance noise is inherently sparse, presenting significant challenges in constructing large-scale datasets. To overcome the limitations associated with small-scale datasets (i.e., data scarcity and class imbalance) and to enhance the model's generalization capabilities, we designed the following tailored training algorithms.
+#### A. Class-Aware Augmentation & Weighting Instead of applying uniform random augmentation, we implemented a conditional augmentation logic that adjusts intensity based on specific class characteristics.
++ Target Classes (Appliances): We applied strong augmentation techniques, such as Pitch Shifting and Noise Injection, to artificially synthesize diversity and mitigate the risk of overfitting due to limited data.
++ Rejection Class (Others): Since this class represents the background environment, we employed conservative augmentation to preserve the original acoustic features.
+
+Simultaneously, we computed class weights inversely proportional to the number of samples (Inverse Frequency Weighting) and applied them to the Cross-Entropy Loss function. This mathematically compensates for the imbalance by ensuring that the model prioritizes learning from underrepresented minority classes.
+
+####Augment_utils.py
+```python
+import numpy as np
+import librosa
+
+def add_noise(audio_data, noise_factor=0.005): #add noise
+    noise = np.random.randn(len(audio_data))
+    augmented_data = audio_data + noise_factor * noise
+    augmented_data = augmented_data.astype(type(audio_data[0]))
+    return augmented_data
+
+def pitch_shift(audio_data, sample_rate, n_steps=4): #피치 무작위로
+    return librosa.effects.pitch_shift(y=audio_data, sr=sample_rate, n_steps=n_steps)
+    
+def mask_time(audio_data, t_width_max=1000):
+    augmented_data = audio_data.copy()
+    num_masks = np.random.randint(1,5)
+    for _ in range(num_masks):
+        t = np.random.randint(0, augmented_data.shape[0])
+        t_width = np.random.randint(1, t_width_max + 1)
+
+        # 오디오 길이를 넘지 않도록 끝부분을 보정
+        if t + t_width > augmented_data.shape[0]:
+            t_width = augmented_data.shape[0] - t
+        augmented_data[t:t+t_width] = 0
+    return augmented_data
+
+def mask_freq(wav_data, f_width_max=10):
+    stft = librosa.stft(wav_data) # 오디오를 스펙트로그램으로 변환
+    f_count_max = stft.shape[0] # 총 주파수 밴드 수
+    num_masks = np.random.randint(1, 5) # 마스크 개수 1 ~ 5 랜덤
+    
+    for _ in range(num_masks):
+        f = np.random.randint(0, f_count_max)
+        f_width = np.random.randint(1, f_width_max + 1)
+    
+        if f + f_width > stft.shape[0]: #stft.shape[0]을 넘지 않도록 보정
+            f_width = stft.shape[0] - f
+        stft[f:f+f_width, :] = 0 # 해당 주파수 밴드를 0으로(무음) 만듦
+    return librosa.istft(stft)
+```
+
+```python
+if self.augment:
+  current_class = self.class_names[label] # 현재 데이터의 클래스 이름 확인
+
+  if current_class != 'Others':
+      if np.random.rand() > 0.5:
+          wav_data = add_noise(wav_data, noise_factor=np.random.uniform(0.001, 0.005))
+      if np.random.rand() > 0.3:
+          wav_data = pitch_shift(wav_data, self.sample_rate, n_steps=np.random.randint(-2, 3))
+      if np.random.rand() > 0.3:
+          wav_data = mask_time(wav_data)
+      if np.random.rand() > 0.7:
+          wav_data = mask_freq(wav_data)
+
+  else:
+      if np.random.rand() > 0.8:
+          wav_data = add_noise(wav_data, noise_factor=np.random.uniform(0.001, 0.005))
+      if np.random.rand() > 0.8:
+          wav_data = pitch_shift(wav_data, self.sample_rate, n_steps=np.random.randint(-2, 3))
+      if np.random.rand() > 0.8:
+          wav_data = mask_time(wav_data)
+      if np.random.rand() > 0.8:
+          wav_data = mask_freq(wav_data)
+```
+#### weighting class
+```python
+class_weights = class_weight.compute_class_weight(
+    'balanced', #데이터 개수에 반비례하게 가중치를 줌 (적을수록 많은 가중치)
+    classes=np.unique(train_labels), # np.unique(y_train) -> train_labels
+    y=train_labels                   # y_train -> train_labels
+)
+class_weight_dict = {i : class_weights[i] for i in range(len(class_weights))}
+```
