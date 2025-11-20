@@ -7,7 +7,6 @@
 | Wongyu Lee | Department of Information Systems, Hanyang University | [onew2370@hanyang.ac.kr](mailto:onew2370@hanyang.ac.kr) |
 | Junill Jang | Department of Information Systems, Hanyang University | [jang1161@hanyang.ac.kr](mailto:jang1161@hanyang.ac.kr) |
 | Hoyoung Chung | Department of Information Systems, Hanyang University | [sydney010716@gmail.com](mailto:sydney010716@gmail.com) |
----
 ## Introduction
 
 The primary motivation of this project is to advance Active Noise Control (ANC) systems in smart home by shifting from indiscriminate noise suppression to intelligent, selective cancellation. We aim to efficiently distinguish between disruptive mechanical noises (e.g., vacuums, refrigerator) and essential environmental sounds (e.g., human speech, alarms).
