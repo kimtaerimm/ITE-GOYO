@@ -16,9 +16,12 @@ To achieve this, we implemented and comparatively analyzed fxine-tuned models ba
 
 We constructed a robust dataset by aggregating high-quality samples from multiple verified open-source libraries to maximize classification accuracy and ensure data diversity. 
 Appliance Data Sources:
-**-	Air Conditioner:** Samples were extracted from the UrbanSound8K dataset, a widely used benchmark containing 8,732 labeled sound excerpts from urban environments. We selectively used the relevant class to ensure our model is trained on realistic background noise profiles.
-**-	Vacuum Cleaner:** Data was sourced from ESC-50, a standard collection of 2,000 environmental audio recordings, providing clear and distinct motor sound signatures essential for accurate detection.
-**-	Microwave, Hair Dryer, & Refrigerator:** Due to the scarcity of these specific classes in standard datasets, we collected samples using the Freesound API. We strictly filtered for files with CC0 (Public Domain) or CC-BY (Attribution) licenses to ensure full copyright compliance.
+
+**Air Conditioner:** Samples were extracted from the UrbanSound8K dataset, a widely used benchmark containing 8,732 labeled sound excerpts from urban environments. We selectively used the relevant class to ensure our model is trained on realistic background noise profiles.
+
+**Vacuum Cleaner:** Data was sourced from ESC-50, a standard collection of 2,000 environmental audio recordings, providing clear and distinct motor sound signatures essential for accurate detection.
+
+**Microwave, Hair Dryer, & Refrigerator:** Due to the scarcity of these specific classes in standard datasets, we collected samples using the Freesound API. We strictly filtered for files with CC0 (Public Domain) or CC-BY (Attribution) licenses to ensure full copyright compliance.
 
   
 **The Rejection Class:**
