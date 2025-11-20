@@ -18,15 +18,15 @@ To achieve this, we implemented and comparatively analyzed fxine-tuned models ba
 We constructed a robust dataset by aggregating high-quality samples from multiple verified open-source libraries to maximize classification accuracy and ensure data diversity. 
 
 ### Appliance Data Sources:
-+**Air Conditioner:** Samples were extracted from the UrbanSound8K dataset, a widely used benchmark containing 8,732 labeled sound excerpts from urban environments. We selectively used the relevant class to ensure our model is trained on realistic background noise profiles.
++ **Air Conditioner:** Samples were extracted from the UrbanSound8K dataset, a widely used benchmark containing 8,732 labeled sound excerpts from urban environments. We selectively used the relevant class to ensure our model is trained on realistic background noise profiles.
 
-+**Vacuum Cleaner:** Data was sourced from ESC-50, a standard collection of 2,000 environmental audio recordings, providing clear and distinct motor sound signatures essential for accurate detection.
++ **Vacuum Cleaner:** Data was sourced from ESC-50, a standard collection of 2,000 environmental audio recordings, providing clear and distinct motor sound signatures essential for accurate detection.
 
-+**Microwave, Hair Dryer, & Refrigerator:** Due to the scarcity of these specific classes in standard datasets, we collected samples using the Freesound API. We strictly filtered for files with CC0 (Public Domain) or CC-BY (Attribution) licenses to ensure full copyright compliance.
++ **Microwave, Hair Dryer, & Refrigerator:** Due to the scarcity of these specific classes in standard datasets, we collected samples using the Freesound API. We strictly filtered for files with CC0 (Public Domain) or CC-BY (Attribution) licenses to ensure full copyright compliance.
 
   
 ### **The Rejection Class:**
-+To prevent false positives in smart home environments, we defined an 'Others' class comprising common ambient sounds that should not trigger the ANC system. This class includes human speech, TV audio, and other frequent non-appliance household noises, collected via Freesound to represent a realistic acoustic backdrop.
++ To prevent false positives in smart home environments, we defined an 'Others' class comprising common ambient sounds that should not trigger the ANC system. This class includes human speech, TV audio, and other frequent non-appliance household noises, collected via Freesound to represent a realistic acoustic backdrop.
 
 
 ## Methodology
@@ -36,8 +36,8 @@ This section details the algorithmic framework and system architecture designed 
 ### Core Architecture: Depthwise Separable Convolutions
 Inference latency is the most critical factor for real-time ANC control. Consequently, we selected the MobileNetV1 (YAMNet Backbone) architecture as our core classification algorithm, replacing standard CNNs to significantly reduce computational overhead.
 
-+Algorithmic Efficiency: MobileNetV1 utilizes the Depthwise Separable Convolution technique, which decomposes standard convolution operations into distinct Depthwise and Pointwise convolutions. This approach drastically reduces the number of parameters and Multiply-Accumulate operations (MACs) compared to traditional CNNs. This efficiency is decisive in processing 0.5-second real-time audio streams with minimal latency.
-+Feature Extraction: We leveraged pre-trained YAMNet weights from TensorFlow Hub as a Feature Extractor. To ensure compatibility with our specific requirements, we wrapped the model to align with our system's input/output specifications.
++ **Algorithmic Efficiency**: MobileNetV1 utilizes the Depthwise Separable Convolution technique, which decomposes standard convolution operations into distinct Depthwise and Pointwise convolutions. This approach drastically reduces the number of parameters and Multiply-Accumulate operations (MACs) compared to traditional CNNs. This efficiency is decisive in processing 0.5-second real-time audio streams with minimal latency.
++ **Feature Extraction:** We leveraged pre-trained YAMNet weights from TensorFlow Hub as a Feature Extractor. To ensure compatibility with our specific requirements, we wrapped the model to align with our system's input/output specifications.
 
 ```python
 class YAMNetLayer(tf.keras.layers.Layer):
