@@ -1,6 +1,10 @@
 ## ITE-GOYO
----
+
 # Members
+김태림
+이원규
+정호영
+장준일
 ---
 # Introduction
 
