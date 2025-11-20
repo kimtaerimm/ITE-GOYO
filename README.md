@@ -30,4 +30,4 @@ To prevent false positives in smart home environments, we defined an 'Others' cl
 
 
 ## Methodology
-$$Trigger = \begin{cases} \text{True (ON)} & \text{if } \sum_{i=1}^{5} \mathbb{I}(C_{pred}^{(i)} == C_{target}) \ge 4 \\ \text{False (OFF)} & \text{otherwise} \end{cases}$$<img width="468" height="80" alt="image" src="https://github.com/user-attachments/assets/5c6f3edb-5bd4-4041-9a9e-78997dcfe4ef" />
+$$Trigger = \begin{cases} \text{True (ON)} & \text{if } \sum_{i=1}^{5} \mathbb{I}(C_{pred}^{(i)} == C_{target}) \ge 4 \\ \text{False (OFF)} & \text{otherwise} \end{cases}$$
