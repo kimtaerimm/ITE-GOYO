@@ -224,5 +224,5 @@ For valid signals passing the VAD gate, we applied a Spatio-Temporal Consistency
   + The system compares these predictions with the Spatial ID (Target Class, $C_{target}$) assigned to the specific microphone to calculate the number of matches.
   + Finally, a control signal is generated only if the condition "Is the same target noise detected in 4 or more out of 5 independent trials ($\ge 80\%$) within a 3-second window ($T=3s$)?" is met.
 
-$Trigger = \begin{cases} \text{True (ON)} & \text{if } \sum_{i=1}^{5} \mathbb{I}(C_{pred}^{(i)} == C_{target}) \ge 4 \\ \text{False (OFF)} & \text{otherwise} \end{cases}$
+$$Trigger = \begin{cases} \text{True (ON)} & \text{if } \sum_{i=1}^{5} \mathbb{I}(C_{pred}^{(i)} == C_{target}) \ge 4 \\ \text{False (OFF)} & \text{otherwise} \end{cases}$$
 
