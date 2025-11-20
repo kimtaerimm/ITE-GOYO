@@ -1,17 +1,18 @@
 # ITE-GOYO
 
 ## Members
-김태림
-이원규
-정호영
-장준일
+| Name | Organization | Email |
+|------|---------------|-------|
+| Taerim Kim | Department of Information Systems, Hanyang University | [trnara5375@gmail.com](mailto:trnara5375@gmail.com) |
+| Wongyu Lee | Department of Information Systems, Hanyang University | [onew2370@hanyang.ac.kr](mailto:onew2370@hanyang.ac.kr) |
+| Junill Jang | Department of Information Systems, Hanyang University | [jang1161@hanyang.ac.kr](mailto:jang1161@hanyang.ac.kr) |
+| Hoyoung Chung | Department of Information Systems, Hanyang University | [sydney010716@gmail.com](mailto:sydney010716@gmail.com) |
 ---
 ## Introduction
 
 The primary motivation of this project is to advance Active Noise Control (ANC) systems in smart home by shifting from indiscriminate noise suppression to intelligent, selective cancellation. We aim to efficiently distinguish between disruptive mechanical noises (e.g., vacuums, refrigerator) and essential environmental sounds (e.g., human speech, alarms).
 To achieve this, we implemented and comparatively analyzed fxine-tuned models based on YAMNet and PANNs to develop a robust real-time audio classification framework. Our ultimate goal is to implement a highly reliable control system that utilizes distributed reference microphones and spatio-temporal multi-stage filtering to precisely detect target appliance noise and trigger the ANC module only when necessary, thereby optimizing both noise reduction performance and computational efficiency on edge devices.
 
----
 ## Description of datasets
 
 We constructed a robust dataset by aggregating high-quality samples from multiple verified open-source libraries to maximize classification accuracy and ensure data diversity. 
@@ -27,5 +28,5 @@ Appliance Data Sources:
 **The Rejection Class:**
 -	To prevent false positives in smart home environments, we defined an 'Others' class comprising common ambient sounds that should not trigger the ANC system. This class includes human speech, TV audio, and other frequent non-appliance household noises, collected via Freesound to represent a realistic acoustic backdrop.
 
----
+
 ## Methodology
