@@ -76,7 +76,7 @@ Data within the specialized domain of household appliance noise is inherently sp
 
 Simultaneously, we computed class weights inversely proportional to the number of samples (Inverse Frequency Weighting) and applied them to the Cross-Entropy Loss function. This mathematically compensates for the imbalance by ensuring that the model prioritizes learning from underrepresented minority classes.
 
-####Augment_utils.py
+#### Augmentation depending on size of datasets.
 ```python
 import numpy as np
 import librosa
@@ -142,7 +142,7 @@ if self.augment:
       if np.random.rand() > 0.8:
           wav_data = mask_freq(wav_data)
 ```
-#### weighting class
+#### weighting depending on size of datasets of each classes.
 ```python
 class_weights = class_weight.compute_class_weight(
     'balanced', #데이터 개수에 반비례하게 가중치를 줌 (적을수록 많은 가중치)
