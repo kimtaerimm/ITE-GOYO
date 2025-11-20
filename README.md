@@ -71,7 +71,7 @@ class YAMNetLayer(tf.keras.layers.Layer):
 ### Training Strategy: Imbalance Handling & 2-Phase Optimization
 Data within the specialized domain of household appliance noise is inherently sparse, presenting significant challenges in constructing large-scale datasets. To overcome the limitations associated with small-scale datasets (i.e., data scarcity and class imbalance) and to enhance the model's generalization capabilities, we designed the following tailored training algorithms.
 
-+ ** A. Class-Aware Augmentation & Weighting**
++ A. Class-Aware Augmentation & Weighting
 
 Instead of applying uniform random augmentation, we implemented a conditional augmentation logic that adjusts intensity based on specific class characteristics.
   + Target Classes (Appliances): We applied strong augmentation techniques, such as Pitch Shifting and Noise Injection, to artificially synthesize diversity and mitigate the risk of overfitting due to limited data.
@@ -154,3 +154,57 @@ class_weights = class_weight.compute_class_weight(
 )
 class_weight_dict = {i : class_weights[i] for i in range(len(class_weights))}
 ```
+
++ B. 2-Phase Fine-Tuning Protocol
+To mitigate the risk of 'Catastrophic Forgetting' inherent in transfer learning, we implemented a rigorous two-phase optimization protocol.
+  + Phase 1 (Warm-up): The backbone network is frozen, and only the custom classifier head is trained using a relatively high learning rate ($10^{-3}$). This step stabilizes the initial weights of the dense layers before modifying the feature extractor.
+  + Phase 2 (Fine-tuning): The backbone is unfrozen to allow end-to-end adaptation. However, we critically ensure that Batch Normalization (BN) layers remain frozen while applying a very low learning rate ($10^{-5}$). This technique is pivotal for adapting the model to the specific appliance domain while preserving the robust statistical feature distributions learned from the large-scale source dataset (AudioSet).
+ 
+```python
+#2-Phase Fine-Tuning
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
+              loss='sparse_categorical_crossentropy', 
+              metrics=['accuracy'])
+
+model.fit(
+    train_generator,
+    epochs=20, # phase1은 20 에폭만 진행
+    class_weight=class_weight_dict,
+    validation_data=val_generator,
+    callbacks=[checkpoint_cb],
+    steps_per_epoch=len(train_generator),
+    validation_steps=len(val_generator)
+)
+
+print("[Phase 2](Unfreeze Backbone)")
+
+yamnet_found = False
+for layer in model.layers:
+    # 레이어 이름에 'yamnet'이 있거나 타입이 YAMNetLayer면 품.
+    if 'yamnet' in layer.name.lower() or 'YAMNetLayer' in str(type(layer)):
+        layer.trainable = True
+        yamnet_found = True
+        print(f"-> Unfrozen Layer: {layer.name}")
+
+if not yamnet_found:
+    print("error: YAMNet 레이어를 찾지 못했습니다.")
+    model.trainable = True
+
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5),
+              loss='sparse_categorical_crossentropy', 
+              metrics=['accuracy'])
+
+early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+
+model.fit(
+    train_generator,
+    initial_epoch=20, # 20부터 이어서 시작
+    epochs=100,
+    class_weight=class_weight_dict,
+    validation_data=val_generator,
+    callbacks=[checkpoint_cb, early_stop], # 콜백 추가
+    steps_per_epoch=len(train_generator),
+    validation_steps=len(val_generator)
+)
+```
+
