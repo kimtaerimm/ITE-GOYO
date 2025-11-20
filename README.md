@@ -34,6 +34,7 @@ We constructed a robust dataset by aggregating high-quality samples from multipl
 This section details the algorithmic framework and system architecture designed for precise, real-time classification and control of household appliance noise within resource-constrained edge device environments. To maximize computational efficiency, we adopted a MobileNetV1-based deep learning algorithm. Furthermore, we independently designed and implemented a custom transfer learning strategy and a multi-stage filtering algorithm to overcome data imbalance and real-world environmental variability.
 
 ### Core Architecture: Depthwise Separable Convolutions
+---
 Inference latency is the most critical factor for real-time ANC control. Consequently, we selected the MobileNetV1 (YAMNet Backbone) architecture as our core classification algorithm, replacing standard CNNs to significantly reduce computational overhead.
 
 + **Algorithmic Efficiency**: MobileNetV1 utilizes the Depthwise Separable Convolution technique, which decomposes standard convolution operations into distinct Depthwise and Pointwise convolutions. This approach drastically reduces the number of parameters and Multiply-Accumulate operations (MACs) compared to traditional CNNs. This efficiency is decisive in processing 0.5-second real-time audio streams with minimal latency.
@@ -69,6 +70,8 @@ class YAMNetLayer(tf.keras.layers.Layer):
 ```
 
 ### Training Strategy: Imbalance Handling & 2-Phase Optimization
+---
+
 Data within the specialized domain of household appliance noise is inherently sparse, presenting significant challenges in constructing large-scale datasets. To overcome the limitations associated with small-scale datasets (i.e., data scarcity and class imbalance) and to enhance the model's generalization capabilities, we designed the following tailored training algorithms.
 
 #### A. Class-Aware Augmentation & Weighting
@@ -209,6 +212,7 @@ model.fit(
 ```
 
 ### Real-time Inference & Control Algorithm
+---
 Given the presence of diverse non-stationary noises in real-world residential environments, relying solely on the instantaneous softmax probability of a 'single' deep learning model poses a high risk of false positives. To address this, we designed a **Dual-Stage Filtering Pipeline** to mathematically and statistically verify the reliability of inferences.
 #### A. Optimization: Decibel-based VAD Gating (Pre-filtering)
 To maximize the efficiency of resource-constrained edge devices, we deployed a Db VAD(Voice Activity Detection) algorithm prior to the deep learning inference stage.
