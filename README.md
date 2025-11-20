@@ -208,3 +208,20 @@ model.fit(
 )
 ```
 
+### Real-time Inference & Control Algorithm
+Given the presence of diverse non-stationary noises in real-world residential environments, relying solely on the instantaneous softmax probability of a 'single' deep learning model poses a high risk of false positives. To address this, we designed a **Dual-Stage Filtering Pipeline** to mathematically and statistically verify the reliability of inferences.
+#### A. Optimization: Decibel-based VAD Gating (Pre-filtering)
+To maximize the efficiency of resource-constrained edge devices, we deployed a Db VAD(Voice Activity Detection) algorithm prior to the deep learning inference stage.
++ The input audio stream is monitored in real-time using $0.5s$ chunks, and the average decibel level is calculated for each chunk.
++If the calculated $dB$ value is below a predefined threshold (e.g., $55dB$), the signal is considered insignificant 'background noise' and is immediately dropped. This functions as a Kill Switch, preventing the deep learning model from running during silence, thereby conserving computational resources and power.
+#### B. Stability: Spatio-Temporal Consistency Filtering
+For valid signals passing the VAD gate, we applied a Spatio-Temporal Consistency Algorithm that integrates spatial location information with temporal continuity to generate the final control signal.
++ Sliding Window Buffering
+  + The system utilizes a Sliding Window technique to capture continuous context rather than relying on a single data point.
+  + By striding every $0.5s$, it generates $1.0s$ overlapping windows and loads them into a FIFO (First-In-First-Out) queue, constructing a time-series buffer ($N=5$ chunks) representing the most recent 3 seconds.
++ Majority Voting Logic (Temporal Consistency):
+  + The five independent audio chunks stored in the buffer are each processed by the deep learning model, returning five predicted classes ($C_{pred}$).
+  + The system compares these predictions with the Spatial ID (Target Class, $C_{target}$) assigned to the specific microphone to calculate the number of matches.
+  + Finally, a control signal is generated only if the condition "Is the same target noise detected in 4 or more out of 5 independent trials ($\ge 80\%$) within a 3-second window ($T=3s$)?" is met.
+  .$$Trigger = \begin{cases} \text{True (ON)} & \text{if } \sum_{i=1}^{5} \mathbb{I}(C_{pred}^{(i)} == C_{target}) \ge 4 \\ \text{False (OFF)} & \text{otherwise} \end{cases}$$
+
