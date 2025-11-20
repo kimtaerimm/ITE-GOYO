@@ -30,7 +30,7 @@ To prevent false positives in smart home environments, we defined an 'Others' cl
 
 
 ## Methodology
-```p
+```python
 class YAMNetLayer(tf.keras.layers.Layer):
     """
     (batch_size, 15600) 모양의 원본 오디오(waveform) 배치를 입력받아
