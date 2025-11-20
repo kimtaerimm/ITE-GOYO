@@ -70,14 +70,14 @@ class YAMNetLayer(tf.keras.layers.Layer):
 
 ### Training Strategy: Imbalance Handling & 2-Phase Optimization
 Data within the specialized domain of household appliance noise is inherently sparse, presenting significant challenges in constructing large-scale datasets. To overcome the limitations associated with small-scale datasets (i.e., data scarcity and class imbalance) and to enhance the model's generalization capabilities, we designed the following tailored training algorithms.
-#### A. Class-Aware Augmentation & Weighting Instead of applying uniform random augmentation, we implemented a conditional augmentation logic that adjusts intensity based on specific class characteristics.
+#### + A. Class-Aware Augmentation & Weighting Instead of applying uniform random augmentation, we implemented a conditional augmentation logic that adjusts intensity based on specific class characteristics.
 + Target Classes (Appliances): We applied strong augmentation techniques, such as Pitch Shifting and Noise Injection, to artificially synthesize diversity and mitigate the risk of overfitting due to limited data.
 + Rejection Class (Others): Since this class represents the background environment, we employed conservative augmentation to preserve the original acoustic features.
 
 Simultaneously, we computed class weights inversely proportional to the number of samples (Inverse Frequency Weighting) and applied them to the Cross-Entropy Loss function. This mathematically compensates for the imbalance by ensuring that the model prioritizes learning from underrepresented minority classes.
 
-#### Augmentation depending on size of datasets.
 ```python
+#Augmentation depending on size of datasets.
 import numpy as np
 import librosa
 
@@ -142,8 +142,8 @@ if self.augment:
       if np.random.rand() > 0.8:
           wav_data = mask_freq(wav_data)
 ```
-#### weighting depending on size of datasets of each classes.
 ```python
+#weighting depending on size of datasets of each classes.
 class_weights = class_weight.compute_class_weight(
     'balanced', #데이터 개수에 반비례하게 가중치를 줌 (적을수록 많은 가중치)
     classes=np.unique(train_labels), # np.unique(y_train) -> train_labels
