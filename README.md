@@ -52,7 +52,7 @@ class YAMNetLayer(tf.keras.layers.Layer):
         self.trainable = False # 학습되지 않도록
 
     def call(self, inputs):
-        # 배치 내의 각 샘플(15600,)에 대해 실행할 함수를 정의합니다.
+        # 배치 내의 각 샘플(15600,)에 대해 실행할 함수를 정의.
         def run_yamnet_on_sample(waveform_1d):
             outputs_tuple = self.yamnet_tf_function(waveform_1d)
             return outputs_tuple[1] #YAMNet의 출력값에서 1024의 embedding값만 가져옴.
