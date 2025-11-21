@@ -236,14 +236,21 @@ For valid signals passing the VAD gate, we applied a Spatio-Temporal Consistency
 not yet
 ## V. Related Work
 ### Foundational Studies (Theoretical Background)
+---
 This project is built upon state-of-the-art research in efficient deep learning and audio event classification. We leveraged transfer learning from large-scale pre-trained models to ensure both reliability and real-time performance.
 #### MobileNets (Backbone Architecture)
+**[1] A. G. Howard et al., "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications," arXiv preprint arXiv:1704.04861, 2017.**
++ Relevance: This paper introduces the MobileNetV1 architecture, which utilizes depthwise separable convolutions to drastically reduce computational cost ($MACs$). We cited this work to justify our choice of YAMNet as a lightweight backbone suitable for low-latency inference on edge devices.
 #### PANNs (Comparative Benchmark)
+**[2] Q. Kong et al., "PANNs: Large-Scale Pretrained Audio Neural Networks for Audio Pattern Recognition," IEEE/ACM Transactions on Audio, Speech, and Language Processing, vol. 28, pp. 2880-2894, 2020.**
++ Relevance: This study proposes Cnn14 (PANNs), a state-of-the-art audio classification model. We utilized this model as a comparative benchmark to analyze the trade-offs between model size, accuracy, and latency, ultimately confirming that lighter models are more effective for our specific ANC application.
 #### AudioSet (Pre-training Dataset)
-
+**[3] J. F. Gemmeke et al., "Audio Set: An ontology and human-labeled dataset for audio events," in Proc. IEEE ICASSP, 2017, pp. 776-780.**
++ Relevance: This paper details the large-scale dataset used to pre-train the YAMNet model. Referencing this validates that our model possesses a robust foundational understanding of general audio features before we applied transfer learning with our custom appliance dataset.
 
 
 ### Implementation Tools & Libraries
+---
 The system implementation relies on standard open-source libraries for deep learning and audio signal processing to ensure reproducibility and stability.
 #### Deep Learning Frameworks
 + **TensorFlow & Keras:** Utilized as the primary framework for building the custom classifier head, managing the 2-Phase Fine-Tuning loop, and executing model optimization for edge deployment.
