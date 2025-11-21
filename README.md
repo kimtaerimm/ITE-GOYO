@@ -7,13 +7,13 @@
 | Wongyu Lee | Department of Information Systems, Hanyang University | [onew2370@hanyang.ac.kr](mailto:onew2370@hanyang.ac.kr) |
 | Junill Jang | Department of Information Systems, Hanyang University | [jang1161@hanyang.ac.kr](mailto:jang1161@hanyang.ac.kr) |
 | Hoyoung Chung | Department of Information Systems, Hanyang University | [sydney010716@gmail.com](mailto:sydney010716@gmail.com) |
-## Introduction
+## I. Introduction
 
 The primary motivation of this project is to advance Active Noise Control (ANC) systems in smart home by shifting from indiscriminate noise suppression to intelligent, selective cancellation. We aim to efficiently distinguish between disruptive mechanical noises (e.g., vacuums, refrigerator) and essential environmental sounds (e.g., human speech, alarms).
 
 To achieve this, we implemented and comparatively analyzed fxine-tuned models based on YAMNet and PANNs to develop a robust real-time audio classification framework. Our ultimate goal is to implement a highly reliable control system that utilizes distributed reference microphones and spatio-temporal multi-stage filtering to precisely detect target appliance noise and trigger the ANC module only when necessary, thereby optimizing both noise reduction performance and computational efficiency on edge devices.
 
-## Description of datasets
+## II. Description of datasets
 
 We constructed a robust dataset by aggregating high-quality samples from multiple verified open-source libraries to maximize classification accuracy and ensure data diversity. 
 
@@ -29,7 +29,7 @@ We constructed a robust dataset by aggregating high-quality samples from multipl
 + To prevent false positives in smart home environments, we defined an 'Others' class comprising common ambient sounds that should not trigger the ANC system. This class includes human speech, TV audio, and other frequent non-appliance household noises, collected via Freesound to represent a realistic acoustic backdrop.
 
 
-## Methodology
+## III. Methodology
 
 This section details the algorithmic framework and system architecture designed for precise, real-time classification and control of household appliance noise within resource-constrained edge device environments. To maximize computational efficiency, we adopted a MobileNetV1-based deep learning algorithm. Furthermore, we independently designed and implemented a custom transfer learning strategy and a multi-stage filtering algorithm to overcome data imbalance and real-world environmental variability.
 
@@ -232,9 +232,9 @@ For valid signals passing the VAD gate, we applied a Spatio-Temporal Consistency
 > $$Trigger = \begin{cases} \text{True (ON)} & \text{if } \sum_{i=1}^{5} \mathbb{I}(C_{pred}^{(i)} == C_{target}) \ge 4 \\ 
 \text{False (OFF)} & \text{otherwise} \end{cases}$$
 
-## Evaluation & Analysis
+## IV. Evaluation & Analysis
 not yet
-## Related Work
+## V. Related Work
 ### Foundational Studies (Theoretical Background)
 This project is built upon state-of-the-art research in audio event classification, leveraging transfer learning from large-scale pre-trained models to ensure reliability and efficiency.
 •	MobileNets (Backbone Architecture)
@@ -257,5 +257,5 @@ o	SoundDevice: Integrated for real-time low-latency audio stream acquisition fro
 •	Data Acquisition:
 o	Freesound API: Used to programmatically crawl and filter high-quality datasets based on specific query tags and CC0/CC-BY licenses to address data scarcity.
 
-## Conclusion
+## VI. Conclusion
 not yet
