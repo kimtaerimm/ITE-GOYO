@@ -296,4 +296,9 @@ The system implementation relies on standard open-source libraries for deep lear
 #### Data Acquisition
 + **Freesound API:** Used to programmatically crawl and filter high-quality datasets based on specific query tags and CC0/CC-BY licenses to address data scarcity.
 ## VI. Conclusion
-not yet
+
+In this project, we successfully developed a robust real-time audio classification framework for selective Active Noise Control (ANC) in smart home environments.
+
+By leveraging Transfer Learning with the lightweight MobileNetV1 (YAMNet) architecture, we addressed the limitations of traditional ANC systems, achieving high classification accuracy (84.2%) while maintaining low latency (32ms) suitable for edge devices. We overcame data scarcity through Class-Aware Augmentation and 2-Phase Fine-Tuning, ensuring the model's generalization capability. Furthermore, the integration of a Spatio-Temporal Multi-stage Filtering algorithm significantly enhanced system reliability by virtually eliminating false positives caused by ambient noise or transient events.
+
+This work demonstrates that intelligent, selective noise cancellation is not only feasible but also highly efficient when combining optimized deep learning models with rigorous system-level filtering logic. Future work may involve expanding the target class categories and deploying the system on various hardware platforms to further validate its scalability.
