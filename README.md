@@ -237,9 +237,12 @@ For valid signals passing the VAD gate, we applied a Spatio-Temporal Consistency
 To determine the optimal backbone for our real-time ANC system, we implemented and evaluated two candidate models: YAMNet (MobileNetV1-based) and PANNs (Cnn14-based). Both models were fine-tuned under identical conditions using our custom dataset, and their performance was measured across four key engineering metrics: Accuracy, Latency, Model Parameters, and Storage Size.
 ### Quantitative Results & Analysis
 <img width="790" height="516" alt="image" src="https://github.com/user-attachments/assets/517e1227-3ac0-4d18-aa95-a8b70207f16c" />
+
 As illustrated Performance Benchmark, the experimental results clearly demonstrate the trade-offs between the two architectures.
 **Accuracy:** YAMNet achieved a validation accuracy of 84.21%, outperforming PANNs (63.54%) by approximately **20.7%p**. This indicates that YAMNet is more effective at extracting features from short-duration audio clips typical of appliance noise.
+
 **Inference Latency:** In terms of inference speed, YAMNet recorded an inference time of 34.17 ms, which is 6.3 times faster than PANNs (215.12 ms). This low latency is critical for ensuring the ANC system reacts instantaneously to noise events.
+
 **Model Efficiency:**
 + Parameters: YAMNet (4.01 M) has 20 times fewer parameters compared to PANNs (81.29 M).
 + Storage Size: Consequently, the model file size of YAMNet is only 3.05 MB, making it 102 times lighter than PANNs (311.2 MB).
