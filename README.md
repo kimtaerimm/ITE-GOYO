@@ -268,7 +268,7 @@ To assess the system's robustness beyond the training data, we conducted a blind
 
 Finally, we evaluated the effectiveness of our Dual-Stage Filtering logic.
 
-**+ Rejection Performance:** The confusion matrix analysis revealed that the 'Others' class successfully filtered out non-target sounds such as human speech and TV noise. Even in rare cases of misclassification between similar motor sounds (e.g., Vacuum vs. Hair Dryer), our Spatial Filter (Mic ID Check) provided a fail-safe mechanism, ensuring zero false positives in the final actuation signal.
++ Rejection Performance: The confusion matrix analysis revealed that the 'Others' class successfully filtered out non-target sounds such as human speech and TV noise. Even in rare cases of misclassification between similar motor sounds (e.g., Vacuum vs. Hair Dryer), our Spatial Filter (Mic ID Check) provided a fail-safe mechanism, ensuring zero false positives in the final actuation signal.
 ## V. Related Work
 ### Foundational Studies (Theoretical Background)
 ---
