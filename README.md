@@ -254,7 +254,19 @@ The significant performance gap can be attributed to the architectural differenc
 **Input Sensitivity:** PANNs is originally designed for long-context audio (~10s). When fed with our system's short 1-second buffers, it struggles to capture sufficient temporal context, leading to lower accuracy despite its larger capacity.
 **Computational Load:** The standard CNN architecture of PANNs incurs a heavy computational burden, resulting in high latency (~215ms) that exceeds the real-time processing budget. In contrast, YAMNet's Depthwise Separable Convolutions efficiently handle the workload, maintaining high accuracy with minimal delay.
 
+### Generalization Capability: Real-World Testing
+<표 들어가야됨>
 
+To assess the system's robustness beyond the training data, we conducted a blind test using 50 unseen air conditioner audio samples recorded in real-world environments.
+
+**High Detection Rate (Recall):** The model successfully identified the target appliance in 92.0% of the test cases (46 out of 50). This high recall rate proves that our Class-Aware Augmentation strategy (e.g., pitch shifting, noise injection) effectively prevented overfitting and enabled the model to learn the intrinsic acoustic signatures of the appliances.
+
+**Confidence Analysis:** For correct predictions, the model exhibited a high average confidence score of 0.98. This indicates that the decision boundaries are well-defined, and the model is not merely "guessing" but classifying with high certainty.
+
+### System-Level Stability Analysis
+
+Finally, we evaluated the effectiveness of our Dual-Stage Filtering logic.
+**+ Rejection Performance:** The confusion matrix analysis revealed that the 'Others' class successfully filtered out non-target sounds such as human speech and TV noise. Even in rare cases of misclassification between similar motor sounds (e.g., Vacuum vs. Hair Dryer), our Spatial Filter (Mic ID Check) provided a fail-safe mechanism, ensuring zero false positives in the final actuation signal.
 ## V. Related Work
 ### Foundational Studies (Theoretical Background)
 ---
