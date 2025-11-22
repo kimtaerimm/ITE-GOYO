@@ -233,7 +233,8 @@ For valid signals passing the VAD gate, we applied a Spatio-Temporal Consistency
 \text{False (OFF)} & \text{otherwise} \end{cases}$$
 
 ## IV. Evaluation & Analysis
-not yet
+<img width="1580" height="1032" alt="image" src="https://github.com/user-attachments/assets/517e1227-3ac0-4d18-aa95-a8b70207f16c" />
+
 ## V. Related Work
 ### Foundational Studies (Theoretical Background)
 ---
