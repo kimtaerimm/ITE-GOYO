@@ -239,6 +239,7 @@ To determine the optimal backbone for our real-time ANC system, we implemented a
 <img width="790" height="516" alt="image" src="https://github.com/user-attachments/assets/517e1227-3ac0-4d18-aa95-a8b70207f16c" />
 
 As illustrated Performance Benchmark, the experimental results clearly demonstrate the trade-offs between the two architectures.
+
 **Accuracy:** YAMNet achieved a validation accuracy of 84.21%, outperforming PANNs (63.54%) by approximately **20.7%p**. This indicates that YAMNet is more effective at extracting features from short-duration audio clips typical of appliance noise.
 
 **Inference Latency:** In terms of inference speed, YAMNet recorded an inference time of 34.17 ms, which is 6.3 times faster than PANNs (215.12 ms). This low latency is critical for ensuring the ANC system reacts instantaneously to noise events.
