@@ -242,11 +242,11 @@ As illustrated Performance Benchmark, the experimental results clearly demonstra
 
 **Accuracy:** YAMNet achieved a validation accuracy of 84.21%, outperforming PANNs (63.54%) by approximately **20.7%p**. This indicates that YAMNet is more effective at extracting features from short-duration audio clips typical of appliance noise.
 
-**Inference Latency:** In terms of inference speed, YAMNet recorded an inference time of 34.17 ms, which is 6.3 times faster than PANNs (215.12 ms). This low latency is critical for ensuring the ANC system reacts instantaneously to noise events.
+**Inference Latency:** In terms of inference speed, YAMNet recorded an inference time of 34.17 ms, which is **6.3 times faster** than PANNs (215.12 ms). This low latency is critical for ensuring the ANC system reacts instantaneously to noise events.
 
 **Model Efficiency:**
-+ Parameters: YAMNet (4.01 M) has 20 times fewer parameters compared to PANNs (81.29 M).
-+ Storage Size: Consequently, the model file size of YAMNet is only 3.05 MB, making it 102 times lighter than PANNs (311.2 MB).
++ Parameters: YAMNet (4.01 M) has **20 times fewer** parameters compared to PANNs (81.29 M).
++ Storage Size: Consequently, the model file size of YAMNet is only 3.05 MB, making it **102 times lighter** than PANNs (311.2 MB).
 
 ### Why we chose YAMNet?
 The significant performance gap can be attributed to the architectural differences and input length mismatch.
